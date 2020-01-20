@@ -1,9 +1,4 @@
 
-function checkLength(){
-
-
-}
-
 function register(){
 
     let myForm      = document.querySelector('.myForm');
@@ -14,7 +9,7 @@ function register(){
     let phone       = data[3].value;
     
     
-    if(name.length > 5  && email.length > 0 && phone.length > 5 &&  password.length > 7 && validateEmail(email)){
+    if(name.trim().length > 5  && email.length > 0 && phone.length > 5 &&  password.trim().length > 7 && validateEmail(email)){
         // if(validateEmail(email)){
             localStorage.setItem("name", name);
             localStorage.setItem("email", email);
@@ -43,6 +38,14 @@ function login(){
     let password    = data[1].value;
     let emailcon    = localStorage.getItem("email");
     let passcon     = localStorage.getItem("password");
+
+    if(email.trim().length < 5 && password.trim().length < 5){
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Your Email or Password is empty !',
+          })
+    }
     
     if(checkStorage()){
         if(emailcon === email && passcon === password){
@@ -82,6 +85,10 @@ function checkStorage(){
 function validateEmail(email) {
     let re = /\S+@\S+\.\S+/;
     return re.test(email);
+}
+
+function checkLength(data){
+    return data.value.trim().length ;
 }
 
 window.onload = () => {
